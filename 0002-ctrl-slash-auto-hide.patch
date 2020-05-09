@@ -1,0 +1,47 @@
+# HG changeset patch
+# User senozhatsky@google.com
+# Date 1583891397 -32400
+#      Wed Mar 11 10:49:57 2020 +0900
+# Node ID ad8703e5fa188604849c4ad4d3c9bc1520b6625c
+# Parent  3b80b2362ee30a0e595c830f856b6405cb392733
+ctrl-slash auto-hide
+
+diff --git a/browser/base/content/browser-sets.inc b/browser/base/content/browser-sets.inc
+--- a/browser/base/content/browser-sets.inc
++++ b/browser/base/content/browser-sets.inc
+@@ -198,6 +198,8 @@
+     <key id="key_delete" keycode="VK_DELETE" command="cmd_delete" reserved="false"/>
+     <key id="key_selectAll" data-l10n-id="text-action-select-all-shortcut" modifiers="accel"/>
+ 
++    <key id="key_mytoolbarCmd" key="&mytoolbarCmd.commandkey;" oncommand="BrowserToggleBookmarksToolbar()" modifiers="control"/>
++
+     <key keycode="VK_BACK" command="cmd_handleBackspace" reserved="false"/>
+     <key keycode="VK_BACK" command="cmd_handleShiftBackspace" modifiers="shift" reserved="false"/>
+ #ifndef XP_MACOSX
+diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
+--- a/browser/base/content/browser.js
++++ b/browser/base/content/browser.js
+@@ -2696,6 +2696,13 @@ function gotoHistoryIndex(aEvent) {
+   return true;
+ }
+ 
++function BrowserToggleBookmarksToolbar()
++{
++  let personalToolbar = document.getElementById("PersonalToolbar");
++  let isVisible = personalToolbar.getAttribute("collapsed") == "true";
++  CustomizableUI.setToolbarVisibility("PersonalToolbar", isVisible);
++}
++
+ function BrowserForward(aEvent) {
+   let where = whereToOpenLink(aEvent, false, true);
+ 
+diff --git a/browser/locales/en-US/chrome/browser/browser.dtd b/browser/locales/en-US/chrome/browser/browser.dtd
+--- a/browser/locales/en-US/chrome/browser/browser.dtd
++++ b/browser/locales/en-US/chrome/browser/browser.dtd
+@@ -416,3 +416,6 @@ this container is a toolbar. This avoids
+      used as a textual label for the indicator used by assistive technology
+      users. -->
+ <!ENTITY accessibilityIndicator.tooltip "Accessibility Features Enabled">
++
++<!ENTITY mytoolbarCmd.accesskey   "/">
++<!ENTITY mytoolbarCmd.commandkey   "/">

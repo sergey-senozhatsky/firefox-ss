@@ -1,0 +1,43 @@
+# HG changeset patch
+# User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+# Date 1578533032 -32400
+#      Thu Jan 09 10:23:52 2020 +0900
+# Node ID 374e0339b142bc50fc5d9813e086c1a5f27fb01b
+# Parent  a3a32cb99ac88934860af37d5b895c277e9dcbde
+Hack clipboard
+
+diff -r a3a32cb99ac8 -r 374e0339b142 widget/gtk/nsClipboard.cpp
+--- a/widget/gtk/nsClipboard.cpp	Tue Oct 29 23:34:39 2019 +0900
++++ b/widget/gtk/nsClipboard.cpp	Thu Jan 09 10:23:52 2020 +0900
+@@ -60,9 +60,6 @@
+                            nsCString& str);
+ 
+ GdkAtom GetSelectionAtom(int32_t aWhichClipboard) {
+-  if (aWhichClipboard == nsIClipboard::kGlobalClipboard)
+-    return GDK_SELECTION_CLIPBOARD;
+-
+   return GDK_SELECTION_PRIMARY;
+ }
+ 
+@@ -114,11 +111,20 @@
+   // Save global clipboard content to CLIPBOARD_MANAGER.
+   // gtk_clipboard_store() can run an event loop, so call from a dedicated
+   // runnable.
+-  return SystemGroup::Dispatch(
++  NS_IMETHODIMP ret = SystemGroup::Dispatch(
+       TaskCategory::Other,
+       NS_NewRunnableFunction("gtk_clipboard_store()", []() {
+         gtk_clipboard_store(gtk_clipboard_get(GDK_SELECTION_CLIPBOARD));
+       }));
++
++  if (mSelectionTransferable) {
++      ret = SystemGroup::Dispatch(
++          TaskCategory::Other,
++          NS_NewRunnableFunction("gtk_clipboard_store()", []() {
++            gtk_clipboard_store(gtk_clipboard_get(GDK_SELECTION_PRIMARY));
++          }));
++  }
++  return ret;
+ }
+ 
+ NS_IMETHODIMP

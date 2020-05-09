@@ -1,0 +1,48 @@
+# HG changeset patch
+# User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+# Date 1564985512 -32400
+#      Mon Aug 05 15:11:52 2019 +0900
+# Node ID 6f417ced5a3dd455c2e39e1fa37b5177aed18102
+# Parent  2ff403f9dd43ffb4ca96257f594977d7b4270bba
+Use std::size_t
+
+diff -r 2ff403f9dd43 -r 6f417ced5a3d mfbt/FunctionTypeTraits.h
+--- a/mfbt/FunctionTypeTraits.h	Wed Jan 30 11:15:00 2019 +0900
++++ b/mfbt/FunctionTypeTraits.h	Mon Aug 05 15:11:52 2019 +0900
+@@ -17,7 +17,7 @@
+ //
+ // Given a function type, FunctionTypeTraits will expose the following members:
+ // - ReturnType: Return type.
+-// - arity: Number of parameters (size_t).
++// - arity: Number of parameters (std::size_t).
+ // - ParameterType<N>: Type of the Nth** parameter, 0-indexed.
+ //
+ // ** `ParameterType<N>` with `N` >= `arity` is allowed and gives `void`.
+@@ -56,13 +56,13 @@
+ 
+ // If `safe`, retrieve the `N`th type from `As`, otherwise `void`.
+ // See top description for reason.
+-template <bool safe, size_t N, typename... As>
++template <bool safe, std::size_t N, typename... As>
+ struct TupleElementSafe;
+-template <size_t N, typename... As>
++template <std::size_t N, typename... As>
+ struct TupleElementSafe<true, N, As...> {
+   using Type = typename std::tuple_element<N, std::tuple<As...>>::type;
+ };
+-template <size_t N, typename... As>
++template <std::size_t N, typename... As>
+ struct TupleElementSafe<false, N, As...> {
+   using Type = void;
+ };
+@@ -70,8 +70,8 @@
+ template <typename R, typename... As>
+ struct FunctionTypeTraitsHelper {
+   using ReturnType = R;
+-  static constexpr size_t arity = sizeof...(As);
+-  template <size_t N>
++  static constexpr std::size_t arity = sizeof...(As);
++  template <std::size_t N>
+   using ParameterType =
+       typename TupleElementSafe<(N < sizeof...(As)), N, As...>::Type;
+ };

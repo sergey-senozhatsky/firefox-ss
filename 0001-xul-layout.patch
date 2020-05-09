@@ -1,0 +1,57 @@
+# HG changeset patch
+# User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+# Date 1575342566 -32400
+#      Tue Dec 03 12:09:26 2019 +0900
+# Node ID 23d1ca92ea22e30d2aa0b8055b96553d9088201f
+# Parent  501aef7fe1d9622236600a7e53843d40d163a123
+Tweak layout
+
+diff -r 501aef7fe1d9 -r 23d1ca92ea22 browser/base/content/browser.xhtml
+--- a/browser/base/content/browser.xhtml	Mon Dec 02 10:30:08 2019 +0100
++++ b/browser/base/content/browser.xhtml	Tue Dec 03 12:09:26 2019 +0900
+@@ -789,7 +789,16 @@
+ 
+     </vbox>
+ 
+-    <toolbar id="nav-bar"
++    <toolbar id="PersonalToolbar"
++             mode="icons"
++             class="browser-toolbar chromeclass-directories"
++             context="toolbar-context-menu"
++             toolbarname="&personalbarCmd.label;" accesskey="&personalbarCmd.accesskey;"
++             collapsed="true"
++             customizable="true">
++      <toolbartabstop skipintoolbarset="true"/>
++
++      <toolbaritem id="nav-bar"
+              class="browser-toolbar"
+              aria-label="&navbar.accessibleLabel;"
+              fullscreentoolbar="true" mode="icons" customizable="true"
+@@ -852,7 +861,7 @@
+                        tooltiptext="&homeButton.defaultPage.tooltip;"/>
+         <toolbarspring cui-areatype="toolbar" class="chromeclass-toolbar-additional"/>
+         <toolbaritem id="urlbar-container" flex="400" persist="width"
+-                     removable="false"
++                     removable="true"
+                      class="chromeclass-location" overflows="false">
+           <toolbartabstop/>
+           <hbox id="urlbar" flex="1"
+@@ -1171,17 +1180,8 @@
+       <box id="library-animatable-box" class="toolbarbutton-animatable-box">
+         <image class="toolbarbutton-animatable-image"/>
+       </box>
+-    </toolbar>
++    </toolbaritem>
+ 
+-    <toolbar id="PersonalToolbar"
+-             mode="icons"
+-             class="browser-toolbar chromeclass-directories"
+-             context="toolbar-context-menu"
+-             toolbarname="&personalbarCmd.label;" accesskey="&personalbarCmd.accesskey;"
+-             aria-label="&personalbar.accessibleLabel;"
+-             collapsed="true"
+-             customizable="true">
+-      <toolbartabstop skipintoolbarset="true"/>
+       <toolbaritem id="personal-bookmarks"
+                    title="&bookmarksToolbarItem.label;"
+                    cui-areatype="toolbar"

@@ -1,0 +1,22 @@
+# HG changeset patch
+# User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+# Date 1572359679 -32400
+#      Tue Oct 29 23:34:39 2019 +0900
+# Node ID 5a6061854a3875ab169cb5bad4f6828652936dcb
+# Parent  ed59ba748cc8aca63ff714ab6efca853803067de
+fix url bar styles
+
+diff -r ed59ba748cc8 -r 5a6061854a38 browser/base/content/browser.xhtml
+--- a/browser/base/content/browser.xhtml	Wed Jul 10 11:59:26 2019 +0900
++++ b/browser/base/content/browser.xhtml	Tue Oct 29 23:34:39 2019 +0900
+@@ -868,7 +868,9 @@
+           <toolbartabstop/>
+           <hbox id="urlbar" flex="1"
+                 defaultPlaceholder="&urlbar.placeholder2;"
+-                focused="true"
++                focused="false"
++                quantumbar="false"
++                customizable="true"
+                 pageproxystate="invalid">
+             <hbox id="urlbar-input-container"
+                   flex="1"
