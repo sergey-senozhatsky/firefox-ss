@@ -1,14 +1,14 @@
 # HG changeset patch
 # User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-# Date 1578533032 -32400
-#      Thu Jan 09 10:23:52 2020 +0900
-# Node ID 374e0339b142bc50fc5d9813e086c1a5f27fb01b
-# Parent  a3a32cb99ac88934860af37d5b895c277e9dcbde
+# Date 1591145552 -32400
+#      Wed Jun 03 09:52:32 2020 +0900
+# Node ID 17580873cce52dadd337e5e24d94ffd25e2b3edd
+# Parent  0273227947f72102c4c2afa315745474ce7cec67
 Hack clipboard
 
-diff -r a3a32cb99ac8 -r 374e0339b142 widget/gtk/nsClipboard.cpp
+diff -r 0273227947f7 -r 17580873cce5 widget/gtk/nsClipboard.cpp
 --- a/widget/gtk/nsClipboard.cpp	Tue Oct 29 23:34:39 2019 +0900
-+++ b/widget/gtk/nsClipboard.cpp	Thu Jan 09 10:23:52 2020 +0900
++++ b/widget/gtk/nsClipboard.cpp	Wed Jun 03 09:52:32 2020 +0900
 @@ -60,9 +60,6 @@
                             nsCString& str);
  
@@ -23,19 +23,19 @@ diff -r a3a32cb99ac8 -r 374e0339b142 widget/gtk/nsClipboard.cpp
    // Save global clipboard content to CLIPBOARD_MANAGER.
    // gtk_clipboard_store() can run an event loop, so call from a dedicated
    // runnable.
--  return SystemGroup::Dispatch(
-+  NS_IMETHODIMP ret = SystemGroup::Dispatch(
+-  return SchedulerGroup::Dispatch(
++  NS_IMETHODIMP ret = SchedulerGroup::Dispatch(
        TaskCategory::Other,
        NS_NewRunnableFunction("gtk_clipboard_store()", []() {
          gtk_clipboard_store(gtk_clipboard_get(GDK_SELECTION_CLIPBOARD));
        }));
 +
 +  if (mSelectionTransferable) {
-+      ret = SystemGroup::Dispatch(
-+          TaskCategory::Other,
-+          NS_NewRunnableFunction("gtk_clipboard_store()", []() {
-+            gtk_clipboard_store(gtk_clipboard_get(GDK_SELECTION_PRIMARY));
-+          }));
++      ret = SchedulerGroup::Dispatch(
++              TaskCategory::Other,
++              NS_NewRunnableFunction("gtk_clipboard_store()", []() {
++                  gtk_clipboard_store(gtk_clipboard_get(GDK_SELECTION_PRIMARY));
++        }));
 +  }
 +  return ret;
  }
