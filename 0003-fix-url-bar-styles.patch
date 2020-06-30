@@ -1,22 +1,20 @@
 # HG changeset patch
 # User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-# Date 1572359679 -32400
-#      Tue Oct 29 23:34:39 2019 +0900
-# Node ID 5a6061854a3875ab169cb5bad4f6828652936dcb
-# Parent  ed59ba748cc8aca63ff714ab6efca853803067de
-fix url bar styles
+# Date 1593485384 -32400
+#      Tue Jun 30 11:49:44 2020 +0900
+# Node ID b1754ebcda27ccb39807f6bf554bb8a41915e9f8
+# Parent  d1a4e7ef0909c78528a54adbf6ae3e4d848e3600
+fix urlbar styles
 
-diff -r ed59ba748cc8 -r 5a6061854a38 browser/base/content/browser.xhtml
---- a/browser/base/content/browser.xhtml	Wed Jul 10 11:59:26 2019 +0900
-+++ b/browser/base/content/browser.xhtml	Tue Oct 29 23:34:39 2019 +0900
-@@ -868,7 +868,9 @@
-           <toolbartabstop/>
-           <hbox id="urlbar" flex="1"
-                 defaultPlaceholder="&urlbar.placeholder2;"
+diff -r d1a4e7ef0909 -r b1754ebcda27 browser/base/content/browser.xhtml
+--- a/browser/base/content/browser.xhtml	Wed Mar 11 10:49:57 2020 +0900
++++ b/browser/base/content/browser.xhtml	Tue Jun 30 11:49:44 2020 +0900
+@@ -900,7 +900,7 @@
+                 context=""
+                 data-l10n-id="urlbar-default-placeholder"
+                 data-l10n-attrs="defaultPlaceholder"
 -                focused="true"
-+                focused="false"
-+                quantumbar="false"
-+                customizable="true"
++		customizable="true"
                  pageproxystate="invalid">
+             <hbox id="urlbar-background"/>
              <hbox id="urlbar-input-container"
-                   flex="1"
