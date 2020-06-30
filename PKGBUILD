@@ -4,7 +4,7 @@
 # Contributor: Jakub Schmidtke <sjakub@gmail.com>
 
 pkgname=firefox
-pkgver=77.0
+pkgver=78.0.1
 pkgrel=8
 pkgdesc="Standalone web browser from mozilla.org"
 arch=(x86_64)
@@ -12,7 +12,7 @@ license=(MPL GPL LGPL)
 url="https://www.mozilla.org/firefox/"
 depends=(gtk3 mozilla-common libxt startup-notification mime-types dbus-glib
          ffmpeg nss ttf-font libpulse)
-makedepends=(unzip zip diffutils python2-setuptools yasm mesa imake inetutils
+makedepends=(unzip zip diffutils yasm mesa imake inetutils
              xorg-server-xvfb autoconf2.13 rust mercurial clang llvm jack gtk2
              python nodejs python2-psutil cbindgen nasm)
 optdepends=('networkmanager: Location detection via available WiFi networks'
@@ -23,7 +23,7 @@ optdepends=('networkmanager: Location detection via available WiFi networks'
 options=(!emptydirs !makeflags)
 _repo=https://hg.mozilla.org/mozilla-unified
 #source=("hg+$_repo#tag=FIREFOX_76_0_BUILD3"
-source=("hg+$_repo#tag=FIREFOX_${pkgver//./_}_RELEASE"
+source=("hg+$_repo#tag=FIREFOX_RELEASE_78_BASE"
         $pkgname.desktop
         0001-xul-layout.patch
 	0002-ctrl-slash-auto-hide.patch
@@ -40,7 +40,7 @@ sha256sums=('SKIP'
             'SKIP')
 
 _changeset=353628fec415324ca6aa333ab6c47d447ecc128e
-_changeset_tag=FIREFOX_76_0_1_RELEASE
+_changeset_tag=FIREFOX_RELEASE_78_BASE
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
@@ -108,9 +108,7 @@ ac_add_options --with-system-nss
 # Features
 ac_add_options --enable-alsa
 ac_add_options --enable-jack
-ac_add_options --enable-startup-notification
 ac_add_options --enable-crashreporter
-ac_add_options --disable-gconf
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 END
