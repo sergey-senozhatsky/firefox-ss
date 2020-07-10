@@ -4,7 +4,7 @@
 # Contributor: Jakub Schmidtke <sjakub@gmail.com>
 
 pkgname=firefox
-pkgver=78.0.1
+pkgver=78.0.2
 pkgrel=8
 pkgdesc="Standalone web browser from mozilla.org"
 arch=(x86_64)
@@ -27,7 +27,7 @@ optdepends=('networkmanager: Location detection via available WiFi networks'
 options=(!emptydirs !makeflags)
 _repo=https://hg.mozilla.org/mozilla-unified
 #source=("hg+$_repo#tag=FIREFOX_76_0_BUILD3"
-source=("hg+$_repo#tag=FIREFOX_78_0_1_BUILD1"
+source=("hg+$_repo#tag=FIREFOX_78_0_2_RELEASE"
         $pkgname.desktop
         0001-xul-layout.patch
 	0002-ctrl-slash-auto-hide.patch
@@ -45,7 +45,7 @@ sha256sums=('SKIP'
 validpgpkeys=('14F26682D0916CDD81E37B6D61B7B526D98F0353') # Mozilla Software Releases <release@mozilla.com>
 
 _changeset=353628fec415324ca6aa333ab6c47d447ecc128e
-_changeset_tag=FIREFOX_78_0_1_BUILD1
+_changeset_tag=FIREFOX_78_0_2_RELEASE
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
