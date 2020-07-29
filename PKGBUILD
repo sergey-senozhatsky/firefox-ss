@@ -4,7 +4,7 @@
 # Contributor: Jakub Schmidtke <sjakub@gmail.com>
 
 pkgname=firefox
-pkgver=78.0.2
+pkgver=79.0
 pkgrel=8
 pkgdesc="Standalone web browser from mozilla.org"
 arch=(x86_64)
@@ -13,7 +13,7 @@ url="https://www.mozilla.org/firefox/"
 depends=(gtk3 libxt mime-types dbus-glib ffmpeg nss ttf-font libpulse)
 makedepends=(unzip zip diffutils yasm mesa imake inetutils xorg-server-xvfb
              autoconf2.13 rust clang llvm jack gtk2 nodejs cbindgen nasm
-             python-setuptools python-psutil)
+             python-setuptools python-psutil lld)
 optdepends=('networkmanager: Location detection via available WiFi networks'
             'libnotify: Notification integration'
             'pulseaudio: Audio support'
@@ -27,13 +27,14 @@ optdepends=('networkmanager: Location detection via available WiFi networks'
 options=(!emptydirs !makeflags)
 _repo=https://hg.mozilla.org/mozilla-unified
 #source=("hg+$_repo#tag=FIREFOX_76_0_BUILD3"
-source=("hg+$_repo#tag=FIREFOX_78_0_2_RELEASE"
+source=("hg+$_repo#tag=FIREFOX_79_0_RELEASE"
         $pkgname.desktop
         0001-xul-layout.patch
 	0002-ctrl-slash-auto-hide.patch
 	0003-fix-url-bar-styles.patch
 	0004-hack-clipboard.patch
-        0005-use-std-size_t.patch)
+        0005-use-std-size_t.patch
+        bug1654465.diff)
 
 sha256sums=('SKIP'
 	    'SKIP'
@@ -41,11 +42,12 @@ sha256sums=('SKIP'
             'SKIP'
 	    'SKIP'
             'SKIP'
+            'SKIP'
             'SKIP')
 validpgpkeys=('14F26682D0916CDD81E37B6D61B7B526D98F0353') # Mozilla Software Releases <release@mozilla.com>
 
 _changeset=353628fec415324ca6aa333ab6c47d447ecc128e
-_changeset_tag=FIREFOX_78_0_2_RELEASE
+_changeset_tag=FIREFOX_79_0_RELEASE
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
@@ -70,6 +72,7 @@ prepare() {
   hg import ../0003-fix-url-bar-styles.patch
   hg import ../0004-hack-clipboard.patch
   hg import ../0005-use-std-size_t.patch
+  patch -Np1 -i ../bug1654465.diff
 
   echo -n "$_google_api_key" >google-api-key
   echo -n "$_mozilla_api_key" >mozilla-api-key
@@ -84,6 +87,8 @@ ac_add_options --enable-release
 ac_add_options --enable-hardening
 ac_add_options --enable-optimize
 ac_add_options --enable-rust-simd
+ac_add_options --enable-linker=lld
+ac_add_options --disable-elf-hack
 export CC='clang --target=x86_64-unknown-linux-gnu'
 export CXX='clang++ --target=x86_64-unknown-linux-gnu'
 export AR=llvm-ar
@@ -147,15 +152,10 @@ END
     xvfb-run -s "-screen 0 1920x1080x24 -nolisten local" \
     ./mach python build/pgo/profileserver.py
 
-  if [[ ! -s merged.profdata ]]; then
-    error "No profile data produced."
-    return 1
-  fi
-
-  if [[ ! -s jarlog ]]; then
-    error "No jar log produced."
-    return 1
-  fi
+  stat -c "Profile data found (%s bytes)" merged.profdata
+  test -s merged.profdata
+  stat -c "Jar log found (%S bytes)" jarlog
+  test -s jarlog
 
   msg2 "Removing instrumented browser..."
   ./mach clobber
