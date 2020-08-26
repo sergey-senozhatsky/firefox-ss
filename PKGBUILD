@@ -4,7 +4,7 @@
 # Contributor: Jakub Schmidtke <sjakub@gmail.com>
 
 pkgname=firefox
-pkgver=79.0
+pkgver=80.0
 pkgrel=8
 pkgdesc="Standalone web browser from mozilla.org"
 arch=(x86_64)
@@ -27,27 +27,25 @@ optdepends=('networkmanager: Location detection via available WiFi networks'
 options=(!emptydirs !makeflags)
 _repo=https://hg.mozilla.org/mozilla-unified
 #source=("hg+$_repo#tag=FIREFOX_76_0_BUILD3"
-source=("hg+$_repo#tag=FIREFOX_79_0_RELEASE"
+source=("hg+$_repo#tag=FIREFOX_80_0_RELEASE"
         $pkgname.desktop
         0001-xul-layout.patch
 	0002-ctrl-slash-auto-hide.patch
 	0003-fix-url-bar-styles.patch
 	0004-hack-clipboard.patch
-        0005-use-std-size_t.patch
-        bug1654465.diff)
+        0005-use-std-size_t.patch)
 
 sha256sums=('SKIP'
 	    'SKIP'
 	    'SKIP'
             'SKIP'
-	    'SKIP'
             'SKIP'
             'SKIP'
             'SKIP')
 validpgpkeys=('14F26682D0916CDD81E37B6D61B7B526D98F0353') # Mozilla Software Releases <release@mozilla.com>
 
 _changeset=353628fec415324ca6aa333ab6c47d447ecc128e
-_changeset_tag=FIREFOX_79_0_RELEASE
+_changeset_tag=FIREFOX_80_0_RELEASE
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
@@ -72,7 +70,6 @@ prepare() {
   hg import ../0003-fix-url-bar-styles.patch
   hg import ../0004-hack-clipboard.patch
   hg import ../0005-use-std-size_t.patch
-  patch -Np1 -i ../bug1654465.diff
 
   echo -n "$_google_api_key" >google-api-key
   echo -n "$_mozilla_api_key" >mozilla-api-key
@@ -81,6 +78,7 @@ prepare() {
 
   cat >../mozconfig <<END
 ac_add_options --enable-application=browser
+mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
 
 ac_add_options --prefix=/usr
 ac_add_options --enable-release
@@ -132,11 +130,6 @@ build() {
 
   # LTO needs more open files
   ulimit -n 4096
-
-  # -fno-plt with cross-LTO causes obscure LLVM errors
-  # LLVM ERROR: Function Import: link error
-  CFLAGS="${CFLAGS/-fno-plt/}"
-  CXXFLAGS="${CXXFLAGS/-fno-plt/}"
 
   # Do 3-tier PGO
   msg2 "Building instrumented browser..."
@@ -235,14 +228,6 @@ END
   if [[ -e $nssckbi ]]; then
     ln -srfv "$pkgdir/usr/lib/libnssckbi.so" "$nssckbi"
   fi
-
-#  if [[ -f "$startdir/.crash-stats-api.token" ]]; then
-#    find . -name '*crashreporter-symbols-full.zip' -exec \
-#      "$startdir/upload-symbol-archive" "$startdir/.crash-stats-api.token" {} +
-#  else
-#    find . -name '*crashreporter-symbols-full.zip' -exec \
-#      cp -fvt "$startdir" {} +
-#  fi
 }
 
 # vim:set sw=2 et:
