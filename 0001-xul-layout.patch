@@ -1,14 +1,14 @@
 # HG changeset patch
 # User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-# Date 1603329095 -32400
-#      Thu Oct 22 10:11:35 2020 +0900
-# Node ID d5314a717b7ee494f40df53cccf9491778bb9f7d
-# Parent  bbdea0acf29a60ac9500439691337f3e0e96eb2f
+# Date 1604919518 -32400
+#      Mon Nov 09 19:58:38 2020 +0900
+# Node ID f0f238f1ccf4d43628d8699149c2dce37825be39
+# Parent  690c4477e78a86bf10b1d3e4cf5d9b9cf65ddb4d
 xul layout
 
-diff -r bbdea0acf29a -r d5314a717b7e browser/base/content/browser.xhtml
---- a/browser/base/content/browser.xhtml	Tue Oct 13 15:50:12 2020 +0000
-+++ b/browser/base/content/browser.xhtml	Thu Oct 22 10:11:35 2020 +0900
+diff -r 690c4477e78a -r f0f238f1ccf4 browser/base/content/browser.xhtml
+--- a/browser/base/content/browser.xhtml	Tue Oct 27 11:13:13 2020 +0000
++++ b/browser/base/content/browser.xhtml	Mon Nov 09 19:58:38 2020 +0900
 @@ -1654,7 +1654,16 @@
  
      </vbox>
@@ -36,10 +36,12 @@ diff -r bbdea0acf29a -r d5314a717b7e browser/base/content/browser.xhtml
                       class="chromeclass-location" overflows="false">
            <toolbartabstop/>
            <hbox id="urlbar" flex="1"
-@@ -2041,16 +2050,6 @@
+@@ -2039,17 +2048,6 @@
+       <box id="library-animatable-box" class="toolbarbutton-animatable-box">
+         <image class="toolbarbutton-animatable-image"/>
        </box>
-     </toolbar>
- 
+-    </toolbar>
+-
 -    <toolbar id="PersonalToolbar"
 -             mode="icons"
 -             class="browser-toolbar chromeclass-directories"
@@ -49,11 +51,10 @@ diff -r bbdea0acf29a -r d5314a717b7e browser/base/content/browser.xhtml
 -             collapsed="true"
 -             customizable="true">
 -      <toolbartabstop skipintoolbarset="true"/>
--
+ 
        <toolbarbutton id="managed-bookmarks"
                       class="bookmark-item"
-                      data-l10n-id="managed-bookmarks"
-@@ -2066,6 +2065,7 @@
+@@ -2066,6 +2064,7 @@
                     ondragstart="PlacesToolbarHelper.onDragStartManaged(event);"
                     onpopupshowing="PlacesToolbarHelper.populateManagedBookmarks(this);"/>
        </toolbarbutton>
