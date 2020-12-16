@@ -1,15 +1,15 @@
 # HG changeset patch
 # User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-# Date 1604919518 -32400
-#      Mon Nov 09 19:58:38 2020 +0900
-# Node ID f0f238f1ccf4d43628d8699149c2dce37825be39
-# Parent  690c4477e78a86bf10b1d3e4cf5d9b9cf65ddb4d
+# Date 1608112057 -32400
+#      Wed Dec 16 18:47:37 2020 +0900
+# Node ID 0d37087f739991859343e0ece51162b832cf0765
+# Parent  98507f230e7442065b287ced065ac77d4d8ea35d
 xul layout
 
-diff -r 690c4477e78a -r f0f238f1ccf4 browser/base/content/browser.xhtml
---- a/browser/base/content/browser.xhtml	Tue Oct 27 11:13:13 2020 +0000
-+++ b/browser/base/content/browser.xhtml	Mon Nov 09 19:58:38 2020 +0900
-@@ -1654,7 +1654,16 @@
+diff -r 98507f230e74 -r 0d37087f7399 browser/base/content/browser.xhtml
+--- a/browser/base/content/browser.xhtml	Thu Dec 10 19:50:12 2020 +0000
++++ b/browser/base/content/browser.xhtml	Wed Dec 16 18:47:37 2020 +0900
+@@ -1648,7 +1648,16 @@
  
      </vbox>
  
@@ -27,7 +27,7 @@ diff -r 690c4477e78a -r f0f238f1ccf4 browser/base/content/browser.xhtml
               class="browser-toolbar"
               aria-label="&navbar.accessibleLabel;"
               fullscreentoolbar="true" mode="icons" customizable="true"
-@@ -1717,7 +1726,7 @@
+@@ -1711,7 +1720,7 @@
                         tooltiptext="&homeButton.defaultPage.tooltip;"/>
          <toolbarspring cui-areatype="toolbar" class="chromeclass-toolbar-additional"/>
          <toolbaritem id="urlbar-container" flex="400" persist="width"
@@ -36,7 +36,15 @@ diff -r 690c4477e78a -r f0f238f1ccf4 browser/base/content/browser.xhtml
                       class="chromeclass-location" overflows="false">
            <toolbartabstop/>
            <hbox id="urlbar" flex="1"
-@@ -2039,17 +2048,6 @@
+@@ -1992,6 +2001,7 @@
+           <image class="toolbarbutton-animatable-image"/>
+         </box>
+       </toolbarbutton>
++    </toolbaritem>
+ 
+       <toolbaritem id="PanelUI-button"
+                    removable="false">
+@@ -2034,16 +2044,6 @@
        <box id="library-animatable-box" class="toolbarbutton-animatable-box">
          <image class="toolbarbutton-animatable-image"/>
        </box>
@@ -48,17 +56,8 @@ diff -r 690c4477e78a -r f0f238f1ccf4 browser/base/content/browser.xhtml
 -             context="toolbar-context-menu"
 -             toolbarname="&personalbarCmd.label;" accesskey="&personalbarCmd.accesskey;"
 -             aria-label="&personalbar.accessibleLabel;"
--             collapsed="true"
 -             customizable="true">
 -      <toolbartabstop skipintoolbarset="true"/>
  
-       <toolbarbutton id="managed-bookmarks"
-                      class="bookmark-item"
-@@ -2066,6 +2064,7 @@
-                    ondragstart="PlacesToolbarHelper.onDragStartManaged(event);"
-                    onpopupshowing="PlacesToolbarHelper.populateManagedBookmarks(this);"/>
-       </toolbarbutton>
-+    </toolbaritem>
- 
-       <toolbaritem id="personal-bookmarks"
-                    title="&bookmarksToolbarItem.label;"
+       <hbox id="personal-toolbar-empty" skipintoolbarset="true" removable="false" hidden="true">
+         <description id="personal-toolbar-empty-description"
