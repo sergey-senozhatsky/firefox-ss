@@ -1,0 +1,48 @@
+# HG changeset patch
+# User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+# Date 1613356160 -32400
+#      Mon Feb 15 11:29:20 2021 +0900
+# Node ID a7488292d7f258836c3309de3a3104800ae014ae
+# Parent  efdc880762440d9ac2bda69ccde82b57716d1cb2
+fix build
+
+diff -r efdc88076244 -r a7488292d7f2 .cargo/config.in
+--- a/.cargo/config.in	Mon Aug 05 15:11:52 2019 +0900
++++ b/.cargo/config.in	Mon Feb 15 11:29:20 2021 +0900
+@@ -3,9 +3,9 @@
+ # Please do not edit.
+ 
+ [source."https://github.com/shravanrn/nix/"]
+-branch = "r0.13.1"
+ git = "https://github.com/shravanrn/nix/"
+ replace-with = "vendored-sources"
++rev = "4af6c367603869a30fddb5ffb0aba2b9477ba92e"
+ 
+ [source."https://github.com/mozilla/neqo"]
+ git = "https://github.com/mozilla/neqo"
+diff -r efdc88076244 -r a7488292d7f2 Cargo.lock
+--- a/Cargo.lock	Mon Aug 05 15:11:52 2019 +0900
++++ b/Cargo.lock	Mon Feb 15 11:29:20 2021 +0900
+@@ -3409,7 +3409,7 @@
+ [[package]]
+ name = "nix"
+ version = "0.13.1"
+-source = "git+https://github.com/shravanrn/nix/?branch=r0.13.1#4af6c367603869a30fddb5ffb0aba2b9477ba92e"
++source = "git+https://github.com/shravanrn/nix/?rev=4af6c367603869a30fddb5ffb0aba2b9477ba92e#4af6c367603869a30fddb5ffb0aba2b9477ba92e"
+ dependencies = [
+  "bitflags",
+  "cc",
+diff -r efdc88076244 -r a7488292d7f2 Cargo.toml
+--- a/Cargo.toml	Mon Aug 05 15:11:52 2019 +0900
++++ b/Cargo.toml	Mon Feb 15 11:29:20 2021 +0900
+@@ -76,8 +76,8 @@
+ libudev-sys = { path = "dom/webauthn/libudev-sys" }
+ packed_simd = { git = "https://github.com/hsivonen/packed_simd", rev="0917fe780032a6bbb23d71be545f9c1834128d75" }
+ rlbox_lucet_sandbox = { git = "https://github.com/PLSysSec/rlbox_lucet_sandbox/", rev="f3cace4fb8b53db0849c62af4fa62bade5a620f7" }
+-nix = { git = "https://github.com/shravanrn/nix/", branch = "r0.13.1", rev="4af6c367603869a30fddb5ffb0aba2b9477ba92e" }
+-spirv_cross = { git = "https://github.com/kvark/spirv_cross", branch = "wgpu4", rev = "e9eff10f964957e7a001c5f712effe17ce09aa99" }
++nix = { git = "https://github.com/shravanrn/nix/", rev="4af6c367603869a30fddb5ffb0aba2b9477ba92e" }
++spirv_cross = { git = "https://github.com/kvark/spirv_cross", branch = "wgpu4" }
+ # failure's backtrace feature might break our builds, see bug 1608157.
+ failure = { git = "https://github.com/badboy/failure", rev = "64af847bc5fdcb6d2438bec8a6030812a80519a5" }
+ failure_derive = { git = "https://github.com/badboy/failure", rev = "64af847bc5fdcb6d2438bec8a6030812a80519a5" }
