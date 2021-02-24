@@ -1,11 +1,11 @@
 #!/bin/sh
 
 pkgname=firefox
-pkgver=85.0.2
+pkgver=86.0
 pkgrel=8
 
 _changeset=353628fec415324ca6aa333ab6c47d447ecc128e
-_changeset_tag=FIREFOX_85_0_2_RELEASE
+_changeset_tag=FIREFOX_86_0_RELEASE
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
@@ -33,7 +33,7 @@ function patch_ff
 	hg import ../0003-fix-url-bar-styles.patch
 	hg import ../0004-hack-clipboard.patch
 	hg import ../0005-use-std-size_t.patch
-	hg import ../48f46a7eada9
+	#hg import ../48f46a7eada9
 }
 
 function build_ff
@@ -101,6 +101,10 @@ ac_add_options --enable-profile-generate=cross
 END
 
 	./mach build
+	if [ $? -ne 0 ]; then
+		echo "Aborting..."
+		exit 0
+	fi
 
 	echo "Profiling instrumented browser..."
 	./mach package
