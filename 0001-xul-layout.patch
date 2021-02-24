@@ -1,15 +1,15 @@
 # HG changeset patch
 # User Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-# Date 1608112057 -32400
-#      Wed Dec 16 18:47:37 2020 +0900
-# Node ID 0d37087f739991859343e0ece51162b832cf0765
-# Parent  98507f230e7442065b287ced065ac77d4d8ea35d
-xul layout
+# Date 1614134168 -32400
+#      Wed Feb 24 11:36:08 2021 +0900
+# Node ID 3f2232366f8e147eb3e41f3bebb78c796b41543e
+# Parent  89345511871ef6489580b994be21189e84462393
+XUL layout
 
-diff -r 98507f230e74 -r 0d37087f7399 browser/base/content/browser.xhtml
---- a/browser/base/content/browser.xhtml	Thu Dec 10 19:50:12 2020 +0000
-+++ b/browser/base/content/browser.xhtml	Wed Dec 16 18:47:37 2020 +0900
-@@ -1648,7 +1648,16 @@
+diff -r 89345511871e -r 3f2232366f8e browser/base/content/browser.xhtml
+--- a/browser/base/content/browser.xhtml	Mon Feb 22 10:08:16 2021 +0000
++++ b/browser/base/content/browser.xhtml	Wed Feb 24 11:36:08 2021 +0900
+@@ -1671,7 +1671,16 @@
  
      </vbox>
  
@@ -18,8 +18,8 @@ diff -r 98507f230e74 -r 0d37087f7399 browser/base/content/browser.xhtml
 +             mode="icons"
 +             class="browser-toolbar chromeclass-directories"
 +             context="toolbar-context-menu"
-+             toolbarname="&personalbarCmd.label;" accesskey="&personalbarCmd.accesskey;"
-+             collapsed="true"
++             data-l10n-id="bookmarks-toolbar"
++             data-l10n-attrs="toolbarname"
 +             customizable="true">
 +      <toolbartabstop skipintoolbarset="true"/>
 +
@@ -27,7 +27,7 @@ diff -r 98507f230e74 -r 0d37087f7399 browser/base/content/browser.xhtml
               class="browser-toolbar"
               aria-label="&navbar.accessibleLabel;"
               fullscreentoolbar="true" mode="icons" customizable="true"
-@@ -1711,7 +1720,7 @@
+@@ -1734,7 +1743,7 @@
                         tooltiptext="&homeButton.defaultPage.tooltip;"/>
          <toolbarspring cui-areatype="toolbar" class="chromeclass-toolbar-additional"/>
          <toolbaritem id="urlbar-container" flex="400" persist="width"
@@ -36,7 +36,7 @@ diff -r 98507f230e74 -r 0d37087f7399 browser/base/content/browser.xhtml
                       class="chromeclass-location" overflows="false">
            <toolbartabstop/>
            <hbox id="urlbar" flex="1"
-@@ -1992,6 +2001,7 @@
+@@ -2015,6 +2024,7 @@
            <image class="toolbarbutton-animatable-image"/>
          </box>
        </toolbarbutton>
@@ -44,7 +44,7 @@ diff -r 98507f230e74 -r 0d37087f7399 browser/base/content/browser.xhtml
  
        <toolbaritem id="PanelUI-button"
                     removable="false">
-@@ -2034,16 +2044,6 @@
+@@ -2057,17 +2067,6 @@
        <box id="library-animatable-box" class="toolbarbutton-animatable-box">
          <image class="toolbarbutton-animatable-image"/>
        </box>
@@ -54,10 +54,11 @@ diff -r 98507f230e74 -r 0d37087f7399 browser/base/content/browser.xhtml
 -             mode="icons"
 -             class="browser-toolbar chromeclass-directories"
 -             context="toolbar-context-menu"
--             toolbarname="&personalbarCmd.label;" accesskey="&personalbarCmd.accesskey;"
--             aria-label="&personalbar.accessibleLabel;"
+-             data-l10n-id="bookmarks-toolbar"
+-             data-l10n-attrs="toolbarname"
 -             customizable="true">
 -      <toolbartabstop skipintoolbarset="true"/>
- 
+-
        <hbox id="personal-toolbar-empty" skipintoolbarset="true" removable="false" hidden="true">
          <description id="personal-toolbar-empty-description"
+                      data-l10n-id="bookmarks-toolbar-empty-message"
