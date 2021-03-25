@@ -1,11 +1,11 @@
 #!/bin/sh
 
 pkgname=firefox
-pkgver=86.0
+pkgver=87.0
 pkgrel=8
 
 _changeset=353628fec415324ca6aa333ab6c47d447ecc128e
-_changeset_tag=FIREFOX_86_0_1_RELEASE
+_changeset_tag=FIREFOX_87_0_RELEASE
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
@@ -102,7 +102,7 @@ END
 
 	./mach build
 	if [ $? -ne 0 ]; then
-		echo "Aborting..."
+		echo "Aborting...."
 		exit 1
 	fi
 
@@ -121,6 +121,10 @@ END
 
 	echo "Removing instrumented browser..."
 	./mach clobber
+	if [ $? -ne 0 ]; then
+		echo "Aborting...."
+		exit 1
+	fi
 
 	 echo "Building optimized browser..."
 cat >.mozconfig ../mozconfig - <<END
