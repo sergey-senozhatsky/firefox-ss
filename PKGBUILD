@@ -4,7 +4,7 @@
 # Contributor: Jakub Schmidtke <sjakub@gmail.com>
 
 pkgname=firefox
-pkgver=87.0
+pkgver=88.0
 pkgrel=8
 pkgdesc="Standalone web browser from mozilla.org"
 arch=(x86_64)
@@ -45,7 +45,7 @@ sha256sums=('SKIP'
   validpgpkeys=('14F26682D0916CDD81E37B6D61B7B526D98F0353') # Mozilla Software Releases <release@mozilla.com>
 
 _changeset=353628fec415324ca6aa333ab6c47d447ecc128e
-_changeset_tag=FIREFOX_87_0_RELEASE
+_changeset_tag=FIREFOX_88_0_RELEASE
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
