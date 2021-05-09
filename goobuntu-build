@@ -1,11 +1,11 @@
 #!/bin/sh
 
 pkgname=firefox
-pkgver=87.0
+pkgver=88.0.1
 pkgrel=8
 
 _changeset=353628fec415324ca6aa333ab6c47d447ecc128e
-_changeset_tag=FIREFOX_87_0_RELEASE
+_changeset_tag=FIREFOX_88_0_1_RELEASE
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
@@ -87,7 +87,7 @@ ac_add_options --disable-tests
 END
 
 	export MOZ_NOSPAM=1
-	export MOZBUILD_STATE_PATH="/media/dev/firefox-goobuntu/mozbuild"
+	export MOZBUILD_STATE_PATH="/home/ss/goobuntu-firefox/mozbuild"
 	export MOZ_ENABLE_FULL_SYMBOLS=0
 	export MACH_USE_SYSTEM_PYTHON=1
 
@@ -148,6 +148,8 @@ function package_ff
 function clean_ff
 {
 	rm -fr ./obj-x86_64-pc-linux-gnu
+	rm -fr obj
+	find . -name "*.o" | xargs rm
 }
 
 case "z$1" in
